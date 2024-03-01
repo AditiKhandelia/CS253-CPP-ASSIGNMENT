@@ -685,8 +685,22 @@ class User_Class
 
             do
             {
-                cout<<">> Please enter the Phone No."<<endl;
-                cin>>Phone_No;
+                try 
+                {
+                    cout << ">> Please enter the Phone No." << endl;
+
+                    // Check if the input is an integer
+                    if (!(cin >> Phone_No)) {
+                        throw runtime_error("Invalid Entry");
+                    }
+
+                } 
+                catch (const exception &e) 
+                {
+                    cout << ">> " << e.what() << endl;
+                    cin.clear();  // Clear the error flag
+                    cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                }
             }while(to_string(Phone_No).length()!=10);
 
             do
