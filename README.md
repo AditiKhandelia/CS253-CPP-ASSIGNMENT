@@ -20,8 +20,8 @@ g++ -std=c++17 -o main main.cpp
 ### main.cpp
 - The main function of the system
   
-### class.h
-- The main header file for the system.
+### class.cpp
+- The main classes file for the system.
 - Contains the classes Car_Class, Customer_Class, Employee_Class and Manager_Class.
 - Contains Utility Functions.
   
