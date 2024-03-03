@@ -1097,8 +1097,9 @@ class User_Class
 
         virtual void Navbar()=0;
         
-        void Booking()
+        int Booking()
         {
+            int Flag=0;
             cout<<">> Select The Index Corresponding To An Option To View Available Cars:"<<endl;
             cout<<">> 1. View Full List Of Cars Available For Rent"<<endl;
             cout<<">> 2. Search All Cars Available For Rent"<<endl;
@@ -1121,6 +1122,7 @@ class User_Class
                     {
                         if(Cars_Present[ite].Available_For_Rent=="Yes" && Cars_Present[ite].On_Rent=="No" && Cars_Present[ite].Status=="Active")
                         {
+                            Flag++;
                             Cars_Present[ite].Display_Car();
                             cout<<endl;
                         }
@@ -1274,6 +1276,7 @@ class User_Class
                     {
                         if((Cars_Present[ite].Company == sCompany || sCompany=="No_Preference") && (Cars_Present[ite].Model == sModel || sModel=="No_Preference") && (Cars_Present[ite].Engine == sEngine || sEngine=="No_Preference") && Cars_Present[ite].Engine_Size >= sEngine_Size && Cars_Present[ite].Litres_p100kms >= sLitres_p100kms && (Cars_Present[ite].Transmission == sTransmission || sTransmission=="No_Preference") && Cars_Present[ite].Seating_Capacity >= sSeating_Capacity && (Cars_Present[ite].Air_Conditioning == sAir_Conditioning || sAir_Conditioning=="No_Preference") && (Cars_Present[ite].Infotainment_System == sInfotainment_System || sInfotainment_System=="No_Preference") && (Cars_Present[ite].Colour == sColour || sColour=="No_Preference") && Cars_Present[ite].Booking_Charge_Day <= sBooking_Charge_Day && Cars_Present[ite].Overdue_Charge <= sOverdue_Charge && Cars_Present[ite].Available_For_Rent=="Yes" && Cars_Present[ite].On_Rent=="No" && Cars_Present[ite].Status=="Active")
                         {
+                            Flag++;
                             Cars_Present[ite].Display_Car();
                         }
                     }
@@ -1287,6 +1290,7 @@ class User_Class
                     break;
                 }
             }
+            return Flag;
         }
 
         virtual void View_Profile()
@@ -1659,18 +1663,43 @@ class Employee_Class: public User_Class
                         cout<<endl;
                         cout<<"---------------------------------"<<endl;
                         cout<<endl;
-                        Booking();
+
+                        int Flag=Booking();
+
+                        //NO CARS AVAILABLE
+                        if(!Flag)
+                        {
+                            cout<<">> No Cars Available"<<endl;
+                            Navbar();
+                        }
+                        
+                        string Employee_Class_Booking_Decision;
                         string Employee_Class_Booking_Car_ID;
                         string Employee_Class_Booking_End_Date;
-                        cout<<">> Enter the ID of the car you wish to book:"<<endl;
-                        cin>>Employee_Class_Booking_Car_ID;
+
+                        //GIVE USER THE OPTION TO NOT BOOK
+                        do
+                        {
+                            cout<<">> Do you wish to book a car? (Y/N)"<<endl;
+                            cin>>Employee_Class_Booking_Decision;
+                        }while(Employee_Class_Booking_Decision!="Y" && Employee_Class_Booking_Decision!="N");
+                        if(Employee_Class_Booking_Decision=="N")
+                        {
+                            Navbar();
+                        }
+
+                        do
+                        {
+                            cout<<">> Enter the ID of the car you wish to book:"<<endl;
+                            cin>>Employee_Class_Booking_Car_ID;
+                        }while(!Is_Member_Cars_Present(Employee_Class_Booking_Car_ID) || Cars_Present[Cars_Map[Employee_Class_Booking_Car_ID]].Available_For_Rent!="Yes" || Cars_Present[Cars_Map[Employee_Class_Booking_Car_ID]].On_Rent=="Yes" || Cars_Present[Cars_Map[Employee_Class_Booking_Car_ID]].Status!="Active");
+
                         do
                         {
                             cout<<">> Enter the End date in the form ddmmyyyy:"<<endl;
                             cin>>Employee_Class_Booking_End_Date;
                         } while (!Viable_Date(Employee_Class_Booking_End_Date) || Date_Difference(Current_Date, Employee_Class_Booking_End_Date)<1);
                         
-
                         //Update the car class
                         Cars_Present[Cars_Map[Employee_Class_Booking_Car_ID]].Book_Car(Employee_Class_Booking_End_Date, Discount, User_ID, User_ID);
 
@@ -1724,6 +1753,7 @@ class Employee_Class: public User_Class
                     }
                     else
                     {
+                        Rented_Cars();
                         Clear_Dues();
                         Update_Eligibility();
                         cout<<">> This Account Can Book Cars: "<<Eligibility<<endl;
@@ -1848,12 +1878,35 @@ class Customer_Class: public User_Class
                         cout<<endl;
                         cout<<"---------------------------------"<<endl;
                         cout<<endl;
-                        Booking();
+
+                        //CARS NOT AVAILABLE
+                        int Flag=Booking();
+                        if(!Flag)
+                        {
+                            cout<<">> No Cars Available"<<endl;
+                            Navbar();
+                        }
+
+                        //GIVE USER THE OPTION TO NOT BOOK
+                        string Customer_Class_Booking_Decision;
+                        do
+                        {
+                            cout<<">> Do you wish to book a car? (Y/N)"<<endl;
+                            cin>>Customer_Class_Booking_Decision;
+                        }while(Customer_Class_Booking_Decision!="Y" && Customer_Class_Booking_Decision!="N");
+                        if(Customer_Class_Booking_Decision=="N")
+                        {
+                            Navbar();
+                        }
+
                         string Customer_Class_Booking_Car_ID;
                         string Customer_Class_Booking_End_Date;
                         string Customer_Class_Managing_Employee_ID;
-                        cout<<">> Enter the ID of the car you wish to book:"<<endl;
-                        cin>>Customer_Class_Booking_Car_ID;
+                        do
+                        {
+                            cout<<">> Enter the ID of the car you wish to book:"<<endl;
+                            cin>>Customer_Class_Booking_Car_ID;
+                        }while(!Is_Member_Cars_Present(Customer_Class_Booking_Car_ID) || Cars_Present[Cars_Map[Customer_Class_Booking_Car_ID]].Available_For_Rent!="Yes" || Cars_Present[Cars_Map[Customer_Class_Booking_Car_ID]].On_Rent=="Yes" || Cars_Present[Cars_Map[Customer_Class_Booking_Car_ID]].Status!="Active");
                         
                         do
                         {
