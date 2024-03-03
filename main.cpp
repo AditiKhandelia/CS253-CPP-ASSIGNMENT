@@ -40,7 +40,7 @@
 #include <numeric>
 #include <chrono>
 #include<ctime>
-#include "./class.h"
+#include "./class.cpp"
 
 using namespace std;
 
