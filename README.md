@@ -129,6 +129,5 @@ This stores the logo for the system.
 - The Employees are entitled to a discount.
   1. This will be updated in accordance with the sale of the employees.
   2. It ranges between 15 and 25 and is set by default to 15.
-- You can book a car for a maximum of 15 days.
  
 # Happy Renting!
