@@ -2003,8 +2003,11 @@ class Manager_Class: public User_Class
             cout<<">> 10. Update Customer"<<endl;
             cout<<">> 11. Update Employee"<<endl;
             cout<<">> 12. Update Car"<<endl;
-            cout<<">> 13. Fix Car"<<endl;
-            cout<<">> 14. Logout"<<endl;
+            cout<<">> 13. Search Customer"<<endl;
+            cout<<">> 14. Search Employee"<<endl;
+            cout<<">> 15. Search Car"<<endl;
+            cout<<">> 16. Fix Car"<<endl;
+            cout<<">> 17. Logout"<<endl;
 
             string User_Input_Navbar;
             int wrong=0;
@@ -2155,6 +2158,222 @@ class Manager_Class: public User_Class
                     cout<<endl;
                     cout<<"---------------------------------"<<endl;
                     cout<<endl;
+                    string Manager_Class_Search_Customer_ID;
+                    string Manager_Class_Search_Customer_First_Name;
+                    string Manager_Class_Search_Customer_Last_Name;
+                    cout<<">> Enter the ID of the Customer or No_Preference:"<<endl;
+                    cin>>Manager_Class_Search_Customer_ID;
+                    cout<<">> Enter the First Name of the Customer or No_Preference:"<<endl;
+                    cin>>Manager_Class_Search_Customer_First_Name;
+                    cout<<">> Enter the Last Name of the Customer or No_Preference:"<<endl;
+                    cin>>Manager_Class_Search_Customer_Last_Name;
+                    int Flag=0;
+                    for(int ite=0;ite<Customers_Present.size();ite++)
+                    {
+                        if((Manager_Class_Search_Customer_ID=="No_Preference" || Customers_Present[ite].User_ID==Manager_Class_Search_Customer_ID) && (Manager_Class_Search_Customer_First_Name=="No_Preference" || Customers_Present[ite].First_Name==Manager_Class_Search_Customer_First_Name) && (Manager_Class_Search_Customer_Last_Name=="No_Preference" || Customers_Present[ite].Last_Name==Manager_Class_Search_Customer_Last_Name))
+                        {
+                            Customers_Present[ite].View_Profile();
+                            Flag=1;
+                        }
+                    }
+                    if(!Flag)
+                    {
+                        cout<<">> No Customers Found"<<endl;
+                    }
+                    Navbar();
+                    break;
+                }
+                case 14:
+                {
+                    cout<<endl;
+                    cout<<"---------------------------------"<<endl;
+                    cout<<endl;
+                    string Manager_Class_Search_Employee_ID;
+                    string Manager_Class_Search_Employee_First_Name;
+                    string Manager_Class_Search_Employee_Last_Name;
+                    cout<<">> Enter the ID of the Employee or No_Preference:"<<endl;
+                    cin>>Manager_Class_Search_Employee_ID;
+                    cout<<">> Enter the First Name of the Employee or No_Preference:"<<endl;
+                    cin>>Manager_Class_Search_Employee_First_Name;
+                    cout<<">> Enter the Last Name of the Employee or No_Preference:"<<endl;
+                    cin>>Manager_Class_Search_Employee_Last_Name;
+                    int Flag=0;
+                    for(int ite=0;ite<Employees_Present.size();ite++)
+                    {
+                        if((Manager_Class_Search_Employee_ID=="No_Preference" || Employees_Present[ite].User_ID==Manager_Class_Search_Employee_ID) && (Manager_Class_Search_Employee_First_Name=="No_Preference" || Employees_Present[ite].First_Name==Manager_Class_Search_Employee_First_Name) && (Manager_Class_Search_Employee_Last_Name=="No_Preference" || Employees_Present[ite].Last_Name==Manager_Class_Search_Employee_Last_Name))
+                        {
+                            Employees_Present[ite].View_Profile();
+                            Flag=1;
+                        }
+                    }
+                    if(!Flag)
+                    {
+                        cout<<">> No Employees Found"<<endl;
+                    }
+                    Navbar();
+                    break;
+                }
+                case 15:
+                {
+                    cout<<endl;
+                    cout<<"---------------------------------"<<endl;
+                    cout<<endl;
+                    string sCompany;
+                    string sModel;
+                    string sEngine;
+                    int sEngine_Size;
+                    string sPower_Output;
+                    float sLitres_p100kms;
+                    string sTransmission;
+                    int sSeating_Capacity;
+                    int sNo_Of_Airbags;
+                    string sAir_Conditioning;
+                    string sInfotainment_System;
+                    string sColour;
+                    long long sBooking_Charge_Day;
+                    long long sOverdue_Charge;
+                    int Current_Input=0;
+                    
+                    cout<<">> Enter The Company or No_Preference:"<<endl;
+                    cin>>sCompany;
+
+                    cout<<">> Enter The Model or No_Preference:"<<endl;
+                    cin>>sModel;
+
+                    cout<<">> Enter The Engine or No_Preference:"<<endl;
+                    cin>>sEngine;
+
+                    do
+                    {
+                        try
+                        {
+                            cout<<">> Enter The Minimum Engine Size:"<<endl;   
+                            if (!(cin >> sEngine_Size)) {
+                                throw runtime_error("Invalid Entry");
+                            }
+                            Current_Input=1;
+                        }
+                        catch (const exception &e) 
+                        {
+                            cout << ">> " << e.what() << endl;
+                            cin.clear();  
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                        }
+                    }while(!Current_Input);
+                        
+                    Current_Input=0;
+                    do
+                    {
+                        try 
+                        {
+                            cout<<">> Enter The Minimum Performance Requirement in kilometres per 1 litre of fuel:"<<endl;
+                            if (!(cin >> sLitres_p100kms)) {
+                                throw runtime_error("Invalid Entry");
+                            }
+                            Current_Input=1;
+                        } 
+                        catch (const exception &e) 
+                        {
+                            cout << ">> " << e.what() << endl;
+                            cin.clear();  
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                        }
+                    }while(!Current_Input);;
+
+                    do
+                    {
+                        cout<<">> Enter The Transmission (Manual, Automatic or No_Preference)"<<endl;
+                        cin>>sTransmission;
+                    }while(sTransmission!="Manual" && sTransmission!="Automatic" && sTransmission!="No_Preference");
+                    
+                    Current_Input=0;
+                    do
+                    {
+                        try 
+                        {
+                            cout<<">> Enter The Minimum Seating Capacity "<<endl;  
+                            if (!(cin >> sSeating_Capacity)) {
+                                throw runtime_error("Invalid Entry");
+                            }
+                            Current_Input=1;
+                        } 
+                        catch (const exception &e) 
+                        {
+                            cout << ">> " << e.what() << endl;
+                            cin.clear();  
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                        }
+                    }while(!Current_Input);
+
+                    do
+                    {
+                        cout<<">> Enter The Minimum Required Availability of Air Conditioning System(Available, Unavailable or No_Preference):"<<endl;
+                        cin>>sAir_Conditioning;
+                    }while(sAir_Conditioning!="Available" && sAir_Conditioning!="Unavailable" && sAir_Conditioning!="No_Preference");
+
+                    do
+                    {
+                        cout<<">> Enter The Required Availability of Infotainment System(Available, Unavailable or No_Preference):"<<endl;
+                        cin>>sInfotainment_System;  
+                    }while(sInfotainment_System!="Available" && sInfotainment_System!="Unavailable" && sInfotainment_System!="No_Preference");
+
+                    cout<<">> Enter the Required Colour or No_Preference"<<endl;
+                    cin>>sColour;
+
+                    Current_Input=0;
+                    do
+                    {
+                        try 
+                        {
+                            cout<<">> Enter the Maximum Per Day Booking Charge Required:"<<endl;  
+                            if (!(cin >> sBooking_Charge_Day)) {
+                                throw runtime_error("Invalid Entry");
+                            }
+                            Current_Input=1;
+                        } 
+                        catch (const exception &e) 
+                        {
+                            cout << ">> " << e.what() << endl;
+                            cin.clear();  
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                        }
+                    }while(!Current_Input);
+
+                    Current_Input=0;
+                    do
+                    {
+                        try 
+                        {
+                            cout<<">> Enter the Maximum Overdue Booking Charge Required:"<<endl;   //convert this to range
+                            if (!(cin >> sOverdue_Charge)) {
+                                throw runtime_error("Invalid Entry");
+                            }
+                            Current_Input=1;
+                        } 
+                        catch (const exception &e) 
+                        {
+                            cout << ">> " << e.what() << endl;
+                            cin.clear();  
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
+                        }
+                    }while(!Current_Input);
+
+                    for(int ite=0;ite<Cars_Present.size();ite++)
+                    {
+                        if((Cars_Present[ite].Company == sCompany || sCompany=="No_Preference") && (Cars_Present[ite].Model == sModel || sModel=="No_Preference") && (Cars_Present[ite].Engine == sEngine || sEngine=="No_Preference") && Cars_Present[ite].Engine_Size >= sEngine_Size && Cars_Present[ite].Litres_p100kms >= sLitres_p100kms && (Cars_Present[ite].Transmission == sTransmission || sTransmission=="No_Preference") && Cars_Present[ite].Seating_Capacity >= sSeating_Capacity && (Cars_Present[ite].Air_Conditioning == sAir_Conditioning || sAir_Conditioning=="No_Preference") && (Cars_Present[ite].Infotainment_System == sInfotainment_System || sInfotainment_System=="No_Preference") && (Cars_Present[ite].Colour == sColour || sColour=="No_Preference") && Cars_Present[ite].Booking_Charge_Day <= sBooking_Charge_Day && Cars_Present[ite].Overdue_Charge <= sOverdue_Charge && Cars_Present[ite].Status=="Active")
+                        {
+                            Cars_Present[ite].Display_Car();
+                        }
+                    }
+                    Navbar();
+                    break;
+
+                }
+                case 16:
+                {
+                    cout<<endl;
+                    cout<<"---------------------------------"<<endl;
+                    cout<<endl;
                     string Manager_Class_Fix_Car_ID;
                     cout<<">> Enter the ID of the Car you wish to fix:"<<endl;
                     cin>>Manager_Class_Fix_Car_ID;
@@ -2181,7 +2400,7 @@ class Manager_Class: public User_Class
                     Navbar();
                     break;
                 }
-                case 14:
+                case 17:
                 {
                     cout<<endl;
                     cout<<"---------------------------------"<<endl;
