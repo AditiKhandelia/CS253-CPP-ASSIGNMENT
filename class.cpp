@@ -87,24 +87,23 @@ bool Viable_Car_Plate_No(const string& Car_Plate_No)
         "SK", "TN", "TR", "UK", "UP", "WB", "AN", "CH", "DH", "DD", "DL", "LD", "PY"
     };
     if(validStateCodes.find(Car_Plate_No.substr(0, 2)) == validStateCodes.end()) return false;
-    if(!Contains_Digits(Car_Plate_No.substr(2, 4))) return false;
+    if(!Contains_Digits(Car_Plate_No.substr(2, 2))) return false;
     if(!isupper(Car_Plate_No[4]) || !isupper(Car_Plate_No[5])) return false;
-    if(!Contains_Digits(Car_Plate_No.substr(6, 11))) return false;
-    
+    if(!Contains_Digits(Car_Plate_No.substr(6, 4))) return false;
     return true;
 }
 //FUNCTION TO CHECK THE VALIDITY OF GMAIL ID
 bool Viable_Email_ID(const string& Email_ID)
 {
-    if(Email_ID.length()<10) return false;
+    if(Email_ID.length()<11) return false;
     if(Email_ID.substr(Email_ID.length()-10, 10)!="@gmail.com") return false;
     return true;
 }
 //FUNCTION TO CHECK THE VALIDITY OF OFFICIAL EMAIL ID
 bool Viable_Official_Email_ID(const string& Email_ID)
 {
-    if(Email_ID.length()<12) return false;
-    if(Email_ID.substr(Email_ID.length()-10, 10)!="@rentnow.com") return false;
+    if(Email_ID.length()<13) return false;
+    if(Email_ID.substr(Email_ID.length()-12, 12)!="@rentnow.com") return false;
     return true;
 }
 //FUNCTION TO CONVERT DATE TO TIME STRUCTURE
@@ -436,7 +435,7 @@ class Car_Class
             
             do
             {
-                cout<<">> Enter Other Remarks: None or headlights_Under_Repair"<<endl;
+                cout<<">> Enter Other Remarks: None or Headlights_Under_Repair"<<endl;
                 cin>>Other_Remarks;
             } while (Other_Remarks!="None" && Other_Remarks!="Headlights_Under_Repair");
 
@@ -1595,6 +1594,7 @@ class Employee_Class: public User_Class
                     cout<<">> Please enter the Official Email ID(@rentnow.com):"<<endl;  
                     cin>>Official_Email;
                 }while(!Viable_Official_Email_ID(Official_Email));
+
                 cout<<">> The User ID is "<<User_ID<<endl;
                 Employee_Score=0;
                 Discount=15;
@@ -2078,14 +2078,12 @@ class Manager_Class: public User_Class
                 case 1:
                 {
                     Add_Customer();
-                    cout<<">> Customer Added"<<endl;
                     Navbar();
                     break;
                 }
                 case 2:
                 {
                     Add_Employee();
-                    cout<<">> Employee Added"<<endl;
                     Navbar();
                     break;
                 }
@@ -2150,8 +2148,11 @@ class Manager_Class: public User_Class
                     string Manager_Class_Update_Customer_ID;
                     do
                     {
-                        cout<<">> Enter the ID of the Customer you wish to update:"<<endl;
-                        cin>>Manager_Class_Update_Customer_ID;
+                        do
+                        {
+                            cout<<">> Enter the ID of the Customer you wish to update:"<<endl;
+                            cin>>Manager_Class_Update_Customer_ID;
+                        }while(!Is_Member_Customers_Present(Manager_Class_Update_Customer_ID));
                         Customers_Present[Customers_Map[Manager_Class_Update_Customer_ID]].Update_Profile();
                         cout<<">> Customer Updated"<<endl;
                         do
@@ -2172,8 +2173,11 @@ class Manager_Class: public User_Class
                     string Manager_Class_Update_Employee_ID;
                     do
                     {
-                        cout<<">> Enter the ID of the Employee you wish to update:"<<endl;
-                        cin>>Manager_Class_Update_Employee_ID;
+                        do
+                        {
+                            cout<<">> Enter the ID of the Employee you wish to update:"<<endl;
+                            cin>>Manager_Class_Update_Employee_ID;
+                        }while(!Is_Member_Employees_Present(Manager_Class_Update_Employee_ID));
                         Employees_Present[Employees_Map[Manager_Class_Update_Employee_ID]].Update_Profile();
                         cout<<">> Employee Updated"<<endl;
                         do{
@@ -2193,8 +2197,11 @@ class Manager_Class: public User_Class
                     string Manager_Class_Update_Car_ID;
                     do
                     {
-                        cout<<">> Enter the ID of the Car you wish to update:"<<endl;
-                        cin>>Manager_Class_Update_Car_ID;
+                        do
+                        {
+                            cout<<">> Enter the ID of the Car you wish to update:"<<endl;
+                            cin>>Manager_Class_Update_Car_ID;
+                        }while(!Is_Member_Cars_Present(Manager_Class_Update_Car_ID));
                         Cars_Present[Cars_Map[Manager_Class_Update_Car_ID]].Update_Car();
                         cout<<">> Car Updated"<<endl;
                         do
@@ -2472,11 +2479,17 @@ class Manager_Class: public User_Class
         void Add_Customer()
         {
             Customer_Class New_Customer;
-            New_Customer.Customer_SignUp();
-            Customers_Present.push_back(New_Customer);
-            Customers_Map[New_Customer.User_ID] = Total_No_Of_Customers;
-            Total_No_Of_Customers_AllTime++;
-            Total_No_Of_Customers++; 
+            if(New_Customer.Customer_SignUp())
+            {
+                Customers_Present.push_back(New_Customer);
+                Customers_Map[New_Customer.User_ID] = Total_No_Of_Customers;
+                Total_No_Of_Customers_AllTime++;
+                Total_No_Of_Customers++; 
+            }
+            else
+            {
+                cout<<">> Add Customer Failed, Underage User"<<endl;
+            }
         }
         void Add_Employee()
         {
